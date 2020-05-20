@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "809960221429",
+    "firebase_url": "https://phone-number-authenticat-f539c.firebaseio.com",
+    "project_id": "phone-number-authenticat-f539c",
+    "storage_bucket": "phone-number-authenticat-f539c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809960221429:android:ae5a78857803358345b3bc",
+        "android_client_info": {
+          "package_name": "com.example.bpcrs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809960221429-m6l2i2al8u1st5r4932rv1po2ontsldg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1WncoKwINrDesy4R_qlrf7lYwSC11800"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809960221429-m6l2i2al8u1st5r4932rv1po2ontsldg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
