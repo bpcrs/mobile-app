@@ -21,6 +21,7 @@ import com.example.bpcrs.screen.login.LoginActivity;
 public class VerifyActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvOTP;
+    private TextView tvTimeOtp;
     private PinView pvOTP;
     private Button btVerify;
     private EditText edtPhoneNumber;
@@ -46,6 +47,7 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
 
     public void initData() {
         tvOTP = findViewById(R.id.tv_otp);
+        tvTimeOtp = findViewById(R.id.tv_timeOTP);
         pvOTP = findViewById(R.id.pv_otp);
         btVerify = findViewById(R.id.bt_verify);
         edtPhoneNumber = findViewById(R.id.edt_phoneNumber);
@@ -61,6 +63,8 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
                     pvOTP.setLineColor(Color.GREEN);
                     tvOTP.setText("OTP Verified");
                     tvOTP.setTextColor(Color.GREEN);
+
+                    mCountDownTimer.cancel();
                     moveToHome();
                 } else {
                     pvOTP.setLineColor(Color.RED);
@@ -82,8 +86,11 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
                     edtPhoneNumber.setVisibility(View.GONE);
                     pvOTP.setVisibility(View.VISIBLE);
                     btVerify.setText(btOTP);
+
                     tvOTP.setText(OTP);
                     tvOTP.setTextColor(Color.BLACK);
+
+                    timeOTP();
                 } else {
                     tvOTP.setTextColor(Color.RED);
                     tvOTP.setText("Please enter your phone number");
@@ -108,5 +115,23 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
             }
         };
         mCountDownTimer.start();
+    }
+
+    public void timeOTP() {
+        tvTimeOtp.setVisibility(View.VISIBLE);
+        mCountDownTimer = new CountDownTimer(60000, 1000) {
+            @Override
+            public void onTick(long l) {
+                int time = (int) (l / 1000);
+                tvTimeOtp.setText(time + "");
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        mCountDownTimer.start();
+
     }
 }
