@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home1"
-        android:title="Trang chủ" />
+    <item android:id="@+id/nav_car"
+        android:icon="@drawable/ic_car"
+        android:title="" />
 
-    <item android:id="@+id/nav_history"
-        android:icon="@drawable/ic_history_clock_button"
-        android:title="Lịch sử"/>
+    <item android:id="@+id/nav_contract"
+        android:icon="@drawable/ic_contract"
+        android:title=""/>
 
-    <item android:id="@+id/nav_user"
-        android:icon="@drawable/ic_account"
-        android:title="Tài khoản"/>
+    <item android:id="@+id/nav_tracking"
+        android:icon="@drawable/ic_tracking"
+        android:title=""/>
 
 </menu>
