@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screen.monitor.MonitorActivity">
+
+    <fragment
+        android:id="@+id/google_map"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        tools:layout="@layout/support_simple_spinner_dropdown_item"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <TextView
+        android:id="@+id/tv_time_location"
+        android:layout_width="300dp"
+        android:text="Time"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="500dp"/>
+
+</FrameLayout>
