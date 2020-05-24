@@ -24,19 +24,27 @@
 
             <TextView
                 android:fontFamily="@font/nunito_black"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="19 May 2019, 9:53pm"
+                android:text="ID Contract: 5AC7ARS"
                 android:textStyle="bold"
-                android:layout_marginRight="10dp"
-                android:textAlignment="textEnd"/>
+                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/lightgray"
-                android:layout_margin="10dp"/>
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:fontFamily="@font/nunito_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Duration: 1d 2h"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
+
+
 
             <TextView
                 android:fontFamily="@font/nunito_black_italic"
@@ -44,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_tracking"
                 android:paddingLeft="10dp"
-                android:text="Tracking"
+                android:text="HCM City - Vung Tau"
                 android:drawablePadding="10dp"/>
 
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.bpcrsadmin.R;
+import com.example.bpcrsadmin.screen.home.account.AccountFragment;
 import com.example.bpcrsadmin.screen.home.car.CarFragment;
 import com.example.bpcrsadmin.screen.home.contract.ContractFragment;
 import com.example.bpcrsadmin.screen.home.track.TractFragment;
@@ -45,6 +46,10 @@ public class HomeActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_tracking:
                             selectedFragment = new TractFragment();
+                            break;
+                        case R.id.nav_account:
+                            selectedFragment = new AccountFragment();
+                            break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;

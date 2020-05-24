@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onFinish() {
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
+                finish();
             }
         };
         mCountDownTimer.start();
