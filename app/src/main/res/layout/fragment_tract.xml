@@ -26,7 +26,7 @@
                 android:fontFamily="@font/nunito_black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ID Contract: 5AC7ARS"
+                android:text="ID : 5AC7ARS"
                 android:textStyle="bold"
                 android:layout_marginLeft="10dp"/>
 
@@ -35,6 +35,14 @@
                 android:layout_height="1dp"
                 android:background="@color/lightgray"
                 android:layout_margin="5dp"/>
+
+            <TextView
+                android:fontFamily="@font/nunito_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Brezza LDI"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
 
             <TextView
                 android:fontFamily="@font/nunito_black"

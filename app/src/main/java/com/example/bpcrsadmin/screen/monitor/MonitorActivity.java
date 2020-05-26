@@ -12,6 +12,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -40,6 +42,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,6 +54,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     private String latiude;
     private String longitude;
     private String time;
+    private String address;
 
     private double la;
     private double lo;
@@ -58,6 +63,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     private GoogleMap mMap;
 
     private TextView tvTimeLocation;
+    private TextView tvAddress;
     private Button btUpdateLocation;
 
     private static final String SREF = "OLD_LOCATION";
@@ -88,6 +94,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.google_map);
         tvTimeLocation = findViewById(R.id.tv_time_location);
+        tvAddress = findViewById(R.id.tv_address);
         btUpdateLocation = findViewById(R.id.bt_updateLocation);
     }
 
@@ -97,6 +104,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
             latiude = pref.getString("latiude", "-34");
             longitude = pref.getString("longitude", "151");
             time = pref.getString("time", "21 October 2020");
+            address = pref.getString("address", "1 Lê Văn Việt, Quận 9");
 
             la = Double.parseDouble(latiude);
             lo = Double.parseDouble(longitude);
@@ -115,6 +123,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         editor.putString("latiude", latiude);
         editor.putString("longitude", longitude);
         editor.putString("time", time);
+        editor.putString("address", address);
 
         editor.apply();
     }
@@ -144,6 +153,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
                 LatLng newLocation = new LatLng(Double.parseDouble(latiude), Double.parseDouble(longitude));
                 //Log.d("new location", latiude + " " + longitude);
+                getAddressOfCarLocation();
 
                 mMap.clear();
 
@@ -180,48 +190,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         //add marker
         googleMap.addMarker(options);
 
-//        locationListener = new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                latiude = String.valueOf(location.getLatitude());
-//                longitude = String.valueOf(location.getLongitude());
-//            }
-//
-//            @Override
-//            public void onStatusChanged(String s, int i, Bundle bundle) {
-//
-//            }
-//
-//            @Override
-//            public void onProviderEnabled(String s) {
-//
-//            }
-//
-//            @Override
-//            public void onProviderDisabled(String s) {
-//
-//            }
-//        };
-//
-//        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        try {
-//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DIST, locationListener);
-//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DIST, locationListener);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-
 
     }
 
@@ -233,6 +201,19 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     public void updateLocation(View view) {
         getNewLocationFromFirebase();
 
+    }
+
+    public void getAddressOfCarLocation() {
+        try {
+            Geocoder geocoder = new Geocoder(MonitorActivity.this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(latiude), Double.parseDouble(longitude), 1);
+            String district = addresses.get(0).getSubAdminArea();
+            address = addresses.get(0).getAdminArea();
+
+            tvAddress.setText(district + "-" + address);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static Bitmap createCustomMarker(Context context, @DrawableRes int resource) {

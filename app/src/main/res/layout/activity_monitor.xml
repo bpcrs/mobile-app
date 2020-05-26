@@ -20,9 +20,20 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textSize="12sp"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="500dp"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="300dp"
+        android:text="Address"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="550dp"/>
 
     <Button
         android:id="@+id/bt_updateLocation"
