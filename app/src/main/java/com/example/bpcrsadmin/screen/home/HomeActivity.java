@@ -12,11 +12,12 @@ import com.example.bpcrsadmin.screen.home.account.AccountFragment;
 import com.example.bpcrsadmin.screen.home.car.CarFragment;
 import com.example.bpcrsadmin.screen.home.contract.ContractFragment;
 import com.example.bpcrsadmin.screen.home.track.TractFragment;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private BottomNavigationView botNav;
+    private BottomAppBar botNav;
 
 
     @Override
@@ -25,35 +26,32 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         botNav = findViewById(R.id.bot_navigate_home);
-        botNav.setOnNavigationItemSelectedListener(navListener);
+        setSupportActionBar(botNav);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CarFragment()).commit();
+        //botNav.setOnContextClickListener(navListener);
+
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CarFragment()).commit();
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-
-                    switch (item.getItemId()) {
-                        case R.id.nav_car:
-                            selectedFragment = new CarFragment();
-                            break;
-                        case R.id.nav_contract:
-                            selectedFragment = new ContractFragment();
-                            break;
-                        case R.id.nav_tracking:
-                            selectedFragment = new TractFragment();
-                            break;
-                        case R.id.nav_account:
-                            selectedFragment = new AccountFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                    return true;
-                }
-            };
+//    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+//            new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                @Override
+//                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                    Fragment selectedFragment = null;
+//
+//                    switch (item.getItemId()) {
+//                        case R.id.nav_car:
+//                            selectedFragment = new CarFragment();
+//                            break;
+//                        case R.id.nav_contract:
+//                            selectedFragment = new ContractFragment();
+//                            break;
+//
+//                    }
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+//                    return true;
+//                }
+//            };
 
 }
