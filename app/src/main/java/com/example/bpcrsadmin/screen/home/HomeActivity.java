@@ -2,13 +2,16 @@ package com.example.bpcrsadmin.screen.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.screen.home.car.CarFragment;
@@ -29,6 +32,11 @@ public class HomeActivity extends AppCompatActivity  {
 
     private Toolbar toolbar;
 
+    private ImageView imgCar;
+    private TextView tvCar;
+
+    private ImageView imgContract;
+    private TextView tvContract;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +46,16 @@ public class HomeActivity extends AppCompatActivity  {
         initData();
         setSupportActionBar(botNav);
 
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CarFragment()).commit();
+        //init data
+        changeFragment(new CarFragment());
 
         flbtTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedFragment = new TractFragment();
                 changeFragment(selectedFragment);
+                unpressContract();
+                unpressCar();
             }
         });
 
@@ -53,6 +63,8 @@ public class HomeActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 selectedFragment = new CarFragment();
+                pressMyCar();
+                unpressContract();
                 changeFragment(selectedFragment);
             }
         });
@@ -61,6 +73,8 @@ public class HomeActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 selectedFragment = new ContractFragment();
+                unpressCar();
+                pressContract();
                 changeFragment(selectedFragment);
             }
         });
@@ -74,6 +88,10 @@ public class HomeActivity extends AppCompatActivity  {
         viewCars = findViewById(R.id.view_cars);
         viewContracts = findViewById(R.id.view_contracts);
         toolbar = findViewById(R.id.toolbar);
+        imgCar = findViewById(R.id.ic_car);
+        tvCar = findViewById(R.id.tv_carIcon);
+        imgContract = findViewById(R.id.img_contract);
+        tvContract = findViewById(R.id.tv_contract);
     }
 
     public void changeFragment(Fragment selectedFragment) {
@@ -83,10 +101,6 @@ public class HomeActivity extends AppCompatActivity  {
     public void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
-        //getSupportActionBar().setIcon(R.drawable.ic_logo);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
-
     }
 
     @Override
@@ -94,6 +108,26 @@ public class HomeActivity extends AppCompatActivity  {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
         return true;
+    }
+
+    public void pressMyCar() {
+        imgCar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_car2));
+        tvCar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+    }
+
+    public void unpressCar() {
+        imgCar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_car));
+        tvCar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
+    }
+
+    public void pressContract() {
+        imgContract.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_contract2));
+        tvContract.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+    }
+
+    public void unpressContract() {
+        imgContract.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_contract));
+        tvContract.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
     }
 
 }
