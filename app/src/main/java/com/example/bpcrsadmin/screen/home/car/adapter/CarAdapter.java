@@ -18,10 +18,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
     private Context mContext;
     private List<Car> mCarList;
+    private CarItemClickListener mCarItemClickListener;
 
-    public CarAdapter(Context context, List<Car> carList) {
+    public CarAdapter(Context context, List<Car> carList, CarItemClickListener carItemClickListener) {
         mContext = context;
         mCarList = carList;
+        mCarItemClickListener = carItemClickListener;
     }
 
     @NonNull
@@ -52,6 +54,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             super(itemView);
             tvCarName = itemView.findViewById(R.id.tv_carName);
             tvCarInfo = itemView.findViewById(R.id.tv_carInfo);
+            itemView.setOnClickListener(v -> mCarItemClickListener.onCarTapped(mCarList.get(getAdapterPosition())));
         }
     }
 }
