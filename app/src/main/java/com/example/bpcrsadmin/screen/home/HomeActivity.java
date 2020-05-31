@@ -21,6 +21,7 @@ import com.example.bpcrsadmin.screen.home.contract.ContractFragment;
 import com.example.bpcrsadmin.screen.home.track.TractFragment;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.onesignal.OneSignal;
 
 public class HomeActivity extends AppCompatActivity  {
 
@@ -39,6 +40,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     private ImageView imgContract;
     private TextView tvContract;
+    private TextView tvTracking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class HomeActivity extends AppCompatActivity  {
                 changeFragment(selectedFragment);
                 unpressContract();
                 unpressCar();
+                pressTracking();
             }
         });
 
@@ -67,6 +70,7 @@ public class HomeActivity extends AppCompatActivity  {
                 selectedFragment = new CarFragment();
                 pressMyCar();
                 unpressContract();
+                unpressTracking();
                 changeFragment(selectedFragment);
             }
         });
@@ -77,11 +81,17 @@ public class HomeActivity extends AppCompatActivity  {
                 selectedFragment = new ContractFragment();
                 unpressCar();
                 pressContract();
+                unpressTracking();
                 changeFragment(selectedFragment);
             }
         });
 
         setupToolbar();
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
     }
 
     public void initData() {
@@ -94,6 +104,7 @@ public class HomeActivity extends AppCompatActivity  {
         tvCar = findViewById(R.id.tv_carIcon);
         imgContract = findViewById(R.id.img_contract);
         tvContract = findViewById(R.id.tv_contract);
+        tvTracking = findViewById(R.id.tv_tracking);
     }
 
     public void changeFragment(Fragment selectedFragment) {
@@ -132,6 +143,14 @@ public class HomeActivity extends AppCompatActivity  {
     public void unpressContract() {
         imgContract.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_contract));
         tvContract.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
+    }
+
+    public void pressTracking() {
+        tvTracking.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+    }
+
+    public void unpressTracking() {
+        tvTracking.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
     }
 
     @Override
