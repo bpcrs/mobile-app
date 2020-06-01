@@ -64,7 +64,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
     private TextView tvTimeLocation;
     private TextView tvAddress;
-    private Button btUpdateLocation;
 
     private static final String SREF = "OLD_LOCATION";
 
@@ -84,7 +83,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         mDatabase = FirebaseDatabase.getInstance().getReference("Location");
         loadLastLocation();
 
-
         mapFragment.getMapAsync(this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
 
@@ -95,7 +93,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                 .findFragmentById(R.id.google_map);
         tvTimeLocation = findViewById(R.id.tv_time_location);
         tvAddress = findViewById(R.id.tv_address);
-        btUpdateLocation = findViewById(R.id.bt_updateLocation);
     }
 
     public void loadLastLocation() {
@@ -112,7 +109,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
             //Log.d("last location", la + " - " + lo);
         } else {
             Log.d("Pref null", "pref null");
-
         }
     }
 
@@ -132,7 +128,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 //get list database from firebase
                 String mlatiude = dataSnapshot.child("latitude").getValue().toString().substring(1, dataSnapshot.child("latitude").getValue().toString().length() - 1);
                 String mlongitude = dataSnapshot.child("longitude").getValue().toString().substring(1, dataSnapshot.child("longitude").getValue().toString().length() - 1);
@@ -156,12 +151,14 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                 getAddressOfCarLocation();
 
                 mMap.clear();
-
                 MarkerOptions options = new MarkerOptions().position(newLocation).title("New location")
                         .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MonitorActivity.this, R.drawable.ic_car)));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 15));
                 mMap.addMarker(options);
-                tvTimeLocation.setText(time);
+
+                String formatTime = splitTime(time);
+                tvTimeLocation.setText(formatTime);
+
                 saveLocation();
             }
 
@@ -175,12 +172,11 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         getNewLocationFromFirebase();
-
         mMap = googleMap;
 
-        tvTimeLocation.setText(time);
+        String formatTime = splitTime(time);
+        tvTimeLocation.setText(formatTime);
 
         LatLng lastLocation = new LatLng(la, lo);
         //create market options
@@ -189,8 +185,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 10));
         //add marker
         googleMap.addMarker(options);
-
-
     }
 
     @Override
@@ -198,15 +192,16 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
     }
 
-    public void updateLocation(View view) {
-        getNewLocationFromFirebase();
-
+    public String splitTime(String time) {
+        String[] timeArr = time.split(" ");
+        return  timeArr[0] + " " + timeArr[1] + " " + timeArr[2] + " " + timeArr[3];
     }
 
     public void getAddressOfCarLocation() {
         try {
             Geocoder geocoder = new Geocoder(MonitorActivity.this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(latiude), Double.parseDouble(longitude), 1);
+
             String district = addresses.get(0).getSubAdminArea();
             address = addresses.get(0).getAdminArea();
 
@@ -217,7 +212,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     public static Bitmap createCustomMarker(Context context, @DrawableRes int resource) {
-
         View marker = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
 
         CircleImageView markerImage =  marker.findViewById(R.id.user_dp);
@@ -225,18 +219,17 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         marker.setLayoutParams(new ViewGroup.LayoutParams(40, ViewGroup.LayoutParams.WRAP_CONTENT));
         marker.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
         marker.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
         marker.buildDrawingCache();
+
         Bitmap bitmap = Bitmap.createBitmap(marker.getMeasuredWidth(), marker.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         marker.draw(canvas);
 
-
         return bitmap;
     }
-
-
 
 }

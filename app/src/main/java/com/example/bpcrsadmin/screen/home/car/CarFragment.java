@@ -55,11 +55,11 @@ public class CarFragment extends Fragment implements CarItemClickListener {
      * @return A new instance of fragment CarFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CarFragment newInstance(String param1, String param2) {
+    public static CarFragment newInstance() {
         CarFragment fragment = new CarFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,11 +93,7 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_car, container, false);
-
-
-
         return rootView;
     }
 
@@ -121,6 +117,5 @@ public class CarFragment extends Fragment implements CarItemClickListener {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
         ft.commit();
-
     }
 }

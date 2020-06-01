@@ -50,13 +50,14 @@ public class HomeActivity extends AppCompatActivity  {
         initData();
         setSupportActionBar(botNav);
 
-        //init data
-        changeFragment(new CarFragment());
+        //init fragment
+        changeFragment(CarFragment.newInstance());
+        pressMyCar();
 
         flbtTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedFragment = new TractFragment();
+                selectedFragment = TractFragment.newInstance();
                 changeFragment(selectedFragment);
                 unpressContract();
                 unpressCar();
@@ -67,7 +68,7 @@ public class HomeActivity extends AppCompatActivity  {
         viewCars.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedFragment = new CarFragment();
+                selectedFragment = CarFragment.newInstance();
                 pressMyCar();
                 unpressContract();
                 unpressTracking();
@@ -78,7 +79,7 @@ public class HomeActivity extends AppCompatActivity  {
         viewContracts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedFragment = new ContractFragment();
+                selectedFragment = ContractFragment.newInstance();
                 unpressCar();
                 pressContract();
                 unpressTracking();
@@ -88,10 +89,13 @@ public class HomeActivity extends AppCompatActivity  {
 
         setupToolbar();
         // OneSignal Initialization
+        /*
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
+
+         */
     }
 
     public void initData() {
@@ -114,8 +118,6 @@ public class HomeActivity extends AppCompatActivity  {
     public void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        //getSupportActionBar().setDisplayShowHomeEnabled(false);
     }
 
     @Override
@@ -130,14 +132,18 @@ public class HomeActivity extends AppCompatActivity  {
         tvCar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
     }
 
-    public void unpressCar() {
-        imgCar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_car));
-        tvCar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
-    }
-
     public void pressContract() {
         imgContract.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_contract2));
         tvContract.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+    }
+
+    public void pressTracking() {
+        tvTracking.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+    }
+
+    public void unpressCar() {
+        imgCar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_car));
+        tvCar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
     }
 
     public void unpressContract() {
@@ -145,17 +151,19 @@ public class HomeActivity extends AppCompatActivity  {
         tvContract.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
     }
 
-    public void pressTracking() {
-        tvTracking.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-    }
-
     public void unpressTracking() {
         tvTracking.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightgray));
     }
 
+
     @Override
     public boolean onSupportNavigateUp() {
+
         onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
         return true;
     }
 
