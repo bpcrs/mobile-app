@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +15,9 @@ import android.view.ViewGroup;
 
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.screen.detail.DetailFragment;
 import com.example.bpcrsadmin.screen.home.car.adapter.CarAdapter;
+import com.example.bpcrsadmin.screen.home.car.adapter.CarItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ import java.util.List;
  * Use the {@link CarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CarFragment extends Fragment {
+public class CarFragment extends Fragment implements CarItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,11 +55,11 @@ public class CarFragment extends Fragment {
      * @return A new instance of fragment CarFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CarFragment newInstance(String param1, String param2) {
+    public static CarFragment newInstance() {
         CarFragment fragment = new CarFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +77,7 @@ public class CarFragment extends Fragment {
     }
 
     public void bindCarsToRecyclerView(List<Car> carList) {
-        carAdapter = new CarAdapter(getContext(), carList);
+        carAdapter = new CarAdapter(getContext(), carList, this);
         rvCar.setAdapter(carAdapter);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvCar.setLayoutManager(layoutManager);
@@ -90,13 +93,11 @@ public class CarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_car, container, false);
-
-
-
         return rootView;
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -105,5 +106,16 @@ public class CarFragment extends Fragment {
 
         createCarList();
         bindCarsToRecyclerView(mCarList);
+    }
+
+    @Override
+    public void onCarTapped(Car car) {
+        Fragment detail = DetailFragment.newInstance(car.getModel(), car.getCarNumber());
+        //add the fragment to activity
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, detail);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

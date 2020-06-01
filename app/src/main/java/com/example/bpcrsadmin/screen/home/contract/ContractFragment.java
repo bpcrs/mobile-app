@@ -38,11 +38,11 @@ public class ContractFragment extends Fragment {
      * @return A new instance of fragment ContractFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ContractFragment newInstance(String param1, String param2) {
+    public static ContractFragment newInstance() {
         ContractFragment fragment = new ContractFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }

@@ -1,47 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".screen.monitor.MonitorActivity">
 
     <fragment
         android:id="@+id/google_map"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="480dp"
         tools:layout="@layout/support_simple_spinner_dropdown_item"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    
+    <LinearLayout
+        android:background="@drawable/bg_map_radius"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="0dp">
 
-    <TextView
-        android:id="@+id/tv_time_location"
-        android:layout_width="300dp"
-        android:text="Time"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textSize="12sp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="500dp"/>
+        <TextView
+            android:id="@+id/tv_car"
+            android:layout_width="300dp"
+            android:text="Lamborghini - SS 77 AA 55"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="300dp"
-        android:text="Address"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textSize="12sp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="550dp"/>
+        <TextView
+            android:id="@+id/tv_time_location"
+            android:layout_width="300dp"
+            android:text="Time"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            />
 
-    <Button
-        android:id="@+id/bt_updateLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="updateLocation"
-        android:text="Update location"/>
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="300dp"
+            android:textColor="@color/white"
+            android:text="Address"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            />
 
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
+
+
+
+
+
+            <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_mobile_phone"
+                android:background="@drawable/white_bg"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
