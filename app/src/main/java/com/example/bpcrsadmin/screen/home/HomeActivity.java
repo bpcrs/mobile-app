@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by TienND on 6/21/20 1:53 AM
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 6/9/20 12:30 AM
+ *
+ */
+
 package com.example.bpcrsadmin.screen.home;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -117,7 +125,10 @@ public class HomeActivity extends AppCompatActivity  {
 
     public void setupToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
     }
 
     @Override
@@ -158,14 +169,12 @@ public class HomeActivity extends AppCompatActivity  {
 
     @Override
     public boolean onSupportNavigateUp() {
-
         onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+        if (getSupportActionBar() != null && getSupportFragmentManager().getBackStackEntryCount() == 0) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
         return true;
     }
-
 
 }

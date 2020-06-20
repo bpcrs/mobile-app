@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by TienND on 6/21/20 1:53 AM
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 6/21/20 1:35 AM
+ *
+ */
+
 package com.example.bpcrsadmin.screen.home.car;
 
 import android.os.Bundle;
@@ -38,8 +46,6 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     private String mParam2;
     private List<Car> mCarList;
     private RecyclerView rvCar;
-    private RecyclerView.Adapter carAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
 
     public CarFragment() {
@@ -50,8 +56,7 @@ public class CarFragment extends Fragment implements CarItemClickListener {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     *
      * @return A new instance of fragment CarFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -77,9 +82,9 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     }
 
     public void bindCarsToRecyclerView(List<Car> carList) {
-        carAdapter = new CarAdapter(getContext(), carList, this);
+        RecyclerView.Adapter carAdapter = new CarAdapter(getContext(), carList, this);
         rvCar.setAdapter(carAdapter);
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvCar.setLayoutManager(layoutManager);
     }
 
@@ -93,8 +98,8 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_car, container, false);
-        return rootView;
+
+        return inflater.inflate(R.layout.fragment_car, container, false);
     }
 
 
@@ -112,10 +117,13 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     public void onCarTapped(Car car) {
         Fragment detail = DetailFragment.newInstance(car.getModel(), car.getCarNumber());
         //add the fragment to activity
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, detail);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(null);
-        ft.commit();
+        if (getFragmentManager() != null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_container, detail);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+
     }
 }

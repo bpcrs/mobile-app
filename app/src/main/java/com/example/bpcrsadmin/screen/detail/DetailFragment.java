@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by TienND on 6/21/20 1:53 AM
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 6/1/20 12:47 PM
+ *
+ */
+
 package com.example.bpcrsadmin.screen.detail;
 
 import android.os.Bundle;
