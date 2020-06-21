@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by TienND on 6/21/20 12:49 PM
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 6/21/20 12:46 PM
+ *
+ */
+
 package com.example.bpcrsadmin.screen.monitor;
 
 import androidx.annotation.DrawableRes;
@@ -14,7 +22,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -23,7 +30,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.bpcrsadmin.R;
@@ -31,7 +37,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,6 +49,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,7 +57,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
     private DatabaseReference mDatabase;
 
-    private String latiude;
+    private String latitude;
     private String longitude;
     private String time;
     private String address;
@@ -98,12 +104,12 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     public void loadLastLocation() {
         SharedPreferences pref = this.getSharedPreferences(SREF, Context.MODE_PRIVATE);
         if (null != pref) {
-            latiude = pref.getString("latiude", "-34");
+            latitude = pref.getString("latiude", "-34");
             longitude = pref.getString("longitude", "151");
             time = pref.getString("time", "21 October 2020");
             address = pref.getString("address", "1 Lê Văn Việt, Quận 9");
 
-            la = Double.parseDouble(latiude);
+            la = Double.parseDouble(latitude);
             lo = Double.parseDouble(longitude);
 
             //Log.d("last location", la + " - " + lo);
@@ -116,7 +122,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         SharedPreferences pref = this.getSharedPreferences(SREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString("latiude", latiude);
+        editor.putString("latiude", latitude);
         editor.putString("longitude", longitude);
         editor.putString("time", time);
         editor.putString("address", address);
@@ -129,14 +135,14 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //get list database from firebase
-                String mlatiude = dataSnapshot.child("latitude").getValue().toString().substring(1, dataSnapshot.child("latitude").getValue().toString().length() - 1);
-                String mlongitude = dataSnapshot.child("longitude").getValue().toString().substring(1, dataSnapshot.child("longitude").getValue().toString().length() - 1);
-                String mTime = dataSnapshot.child("time").getValue().toString().substring(1, dataSnapshot.child("time").getValue().toString().length() - 1);
+                String mlatitude = Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString().substring(1, Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString().length() - 1);
+                String mlongitude = Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString().substring(1, Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString().length() - 1);
+                String mTime = Objects.requireNonNull(dataSnapshot.child("time").getValue()).toString().substring(1, Objects.requireNonNull(dataSnapshot.child("time").getValue()).toString().length() - 1);
 
-                String[] stringLat = mlatiude.split(", ");
+                String[] stringLat = mlatitude.split(", ");
                 Arrays.sort(stringLat);
                 //get last
-                latiude = stringLat[stringLat.length - 1].split("=")[1];
+                latitude = stringLat[stringLat.length - 1].split("=")[1];
 
                 String[] stringLong = mlongitude.split(", ");
                 Arrays.sort(stringLong);
@@ -146,8 +152,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                 Arrays.sort(stringTime);
                 time = stringTime[stringTime.length - 1].split("=")[1];
 
-                LatLng newLocation = new LatLng(Double.parseDouble(latiude), Double.parseDouble(longitude));
-                //Log.d("new location", latiude + " " + longitude);
+                LatLng newLocation = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                //Log.d("new location", latitude + " " + longitude);
                 getAddressOfCarLocation();
 
                 mMap.clear();
@@ -200,19 +206,20 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     public void getAddressOfCarLocation() {
         try {
             Geocoder geocoder = new Geocoder(MonitorActivity.this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(latiude), Double.parseDouble(longitude), 1);
+            List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), 1);
 
             String district = addresses.get(0).getSubAdminArea();
             address = addresses.get(0).getAdminArea();
 
-            tvAddress.setText(district + "-" + address);
+            String displayAddress = district + "-" + address;
+            tvAddress.setText(displayAddress);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     public static Bitmap createCustomMarker(Context context, @DrawableRes int resource) {
-        View marker = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+        View marker = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.custom_marker_layout, null);
 
         CircleImageView markerImage =  marker.findViewById(R.id.user_dp);
         markerImage.setImageResource(resource);

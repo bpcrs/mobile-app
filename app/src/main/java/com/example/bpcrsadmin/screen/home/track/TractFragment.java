@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by TienND on 6/21/20 1:53 AM
+ *  * Created by TienND on 6/21/20 11:58 AM
  *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 6/21/20 1:52 AM
+ *  * Last modified 6/21/20 11:58 AM
  *
  */
 
@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.screen.monitor.MonitorActivity;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TractFragment#newInstance} factory method to
@@ -36,13 +38,9 @@ public class TractFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private CardView cvTrack;
-
-
     public TractFragment() {
         // Required empty public constructor
     }
-
 
     // TODO: Rename and change types and number of parameters
     public static TractFragment newInstance() {
@@ -73,7 +71,7 @@ public class TractFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        cvTrack = getActivity().findViewById(R.id.cv_track);
+        CardView cvTrack = Objects.requireNonNull(getActivity()).findViewById(R.id.cv_track);
         cvTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

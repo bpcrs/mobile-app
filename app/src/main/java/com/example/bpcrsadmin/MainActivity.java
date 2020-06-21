@@ -15,8 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

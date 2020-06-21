@@ -38,14 +38,14 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     @Override
     public CarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.rv_item_car, parent, false);
-        CarViewHolder viewHolder = new CarViewHolder(view);
-        return viewHolder;
+        return new CarViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CarViewHolder holder, int position) {
         holder.tvCarName.setText(mCarList.get(position).getModel());
-        holder.tvCarInfo.setText(mCarList.get(position).getYear() + " - " + mCarList.get(position).getCarNumber());
+        String info = mCarList.get(position).getYear() + " - " + mCarList.get(position).getCarNumber();
+        holder.tvCarInfo.setText(info);
     }
 
     @Override

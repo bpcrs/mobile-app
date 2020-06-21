@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by TienND on 6/21/20 1:53 AM
+ *  * Created by TienND on 6/21/20 12:06 PM
  *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 6/21/20 1:35 AM
+ *  * Last modified 6/21/20 12:06 PM
  *
  */
 
@@ -47,7 +47,6 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     private List<Car> mCarList;
     private RecyclerView rvCar;
 
-
     public CarFragment() {
         // Required empty public constructor
     }
@@ -76,13 +75,10 @@ public class CarFragment extends Fragment implements CarItemClickListener {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
-
-
-
     }
 
     public void bindCarsToRecyclerView(List<Car> carList) {
-        RecyclerView.Adapter carAdapter = new CarAdapter(getContext(), carList, this);
+        CarAdapter carAdapter = new CarAdapter(getContext(), carList, this);
         rvCar.setAdapter(carAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvCar.setLayoutManager(layoutManager);
@@ -98,11 +94,8 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_car, container, false);
     }
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -124,6 +117,5 @@ public class CarFragment extends Fragment implements CarItemClickListener {
             ft.addToBackStack(null);
             ft.commit();
         }
-
     }
 }

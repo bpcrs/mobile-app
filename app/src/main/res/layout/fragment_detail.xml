@@ -17,6 +17,7 @@
         tools:context=".screen.detail.DetailFragment">
 
         <ImageView
+            android:contentDescription="@string/carImgDesc"
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -327,7 +328,6 @@
             app:layout_constraintTop_toBottomOf="@+id/view7"
             tools:layout_editor_absoluteX="27dp" />
 
-
         <View
             android:id="@+id/view8"
             android:layout_width="match_parent"
@@ -345,12 +345,21 @@
             android:layout_marginTop="15dp"
             android:drawableEnd="@drawable/ic_arrowright"
             android:fontFamily="@font/nunito_bold"
-            android:text="Remove"
+            android:text="@string/remove"
             android:textColor="@color/red"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/view8"
             tools:layout_editor_absoluteX="27dp" />
+
+        <View
+            android:id="@+id/view9"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/whitegray"
+            app:layout_constraintTop_toBottomOf="@+id/tv_remove"
+            tools:layout_editor_absoluteX="25dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

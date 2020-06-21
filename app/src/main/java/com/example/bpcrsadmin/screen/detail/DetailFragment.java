@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,6 @@ public class DetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mCarModel;
     private String mCarNumberPlate;
-
-    private TextView tvCarModel;
-    private TextView tvCarNumberPlate;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -82,16 +80,16 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvCarModel = view.findViewById(R.id.tv_carModel);
-        tvCarNumberPlate = view.findViewById(R.id.tv_number_plate);
+        TextView tvCarModel = view.findViewById(R.id.tv_carModel);
+        TextView tvCarNumberPlate = view.findViewById(R.id.tv_number_plate);
 
         tvCarModel.setText(mCarModel);
         tvCarNumberPlate.setText(mCarNumberPlate);
 
-        if (((HomeActivity) getActivity()).getSupportActionBar() != null) {
-            ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+            if (null != ((HomeActivity) getActivity()).getSupportActionBar()) {
+                ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                ((HomeActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+            }
 
     }
 

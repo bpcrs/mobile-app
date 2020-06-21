@@ -5,4 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome">Welcome back</string>
     <string name="vehicle">My vehicle</string>
+    <string name="remove">Remove</string>
+    <string name="carImgDesc">Image Description</string>
+
 </resources>
