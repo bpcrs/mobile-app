@@ -18,6 +18,7 @@ public class SharedPreferenceUtils {
 
 
     public static void saveCurrentLocation(Context context, Location location) {
+        //shared
         SharedPreferences prefs = context.getSharedPreferences(SREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 

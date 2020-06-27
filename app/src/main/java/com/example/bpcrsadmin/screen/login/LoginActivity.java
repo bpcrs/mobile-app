@@ -23,13 +23,8 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private DatabaseReference mDatabase;
-
     private Button btLogin;
     private ProgressBar progressBar;
-
-    private CountDownTimer mCountDownTimer;;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void loadDataFromFirebase() {
-        mDatabase = FirebaseDatabase.getInstance().getReference("Location");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Location");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         btLogin.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        mCountDownTimer = new CountDownTimer(3000, 1000) {
+        CountDownTimer mCountDownTimer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long l) {
 
