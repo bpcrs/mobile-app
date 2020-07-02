@@ -46,7 +46,8 @@
             android:backgroundTint="@color/white"
             app:fabAlignmentMode="center"
             app:fabCradleMargin="5dp"
-            app:hideOnScroll="true">
+            app:hideOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <LinearLayout
                 android:baselineAligned="false"
@@ -132,7 +133,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_tracking"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
             app:layout_anchor="@id/bot_navigate_home"

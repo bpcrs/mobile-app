@@ -182,6 +182,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         mMap = googleMap;
 
         String formatTime = splitTime(time);
+        Log.d("TIME", time);
         tvTimeLocation.setText(formatTime);
 
         LatLng lastLocation = new LatLng(la, lo);

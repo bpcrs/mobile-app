@@ -171,6 +171,8 @@ public class HomeActivity extends AppCompatActivity  {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
+        botNav.performShow();
+
         return true;
     }
 
