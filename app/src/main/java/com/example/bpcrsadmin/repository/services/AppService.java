@@ -8,6 +8,14 @@
 
 package com.example.bpcrsadmin.repository.services;
 
-public interface AppService {
 
+import com.example.bpcrsadmin.model.Account;
+import com.example.bpcrsadmin.repository.api.ApiConfig;
+
+import retrofit2.Call;
+import retrofit2.http.POST;
+
+public interface AppService {
+    @POST(ApiConfig.Api.GET_ACCOUNT)
+    Call<Account> loginWithGoogle(Account account);
 }

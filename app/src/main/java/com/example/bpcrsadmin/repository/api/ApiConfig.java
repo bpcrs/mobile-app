@@ -13,6 +13,10 @@ public class ApiConfig {
     public static final String BASE_URL = "api.bpcrs.network/";
 
     public interface Api {
+        String LOGIN_BY_GOOGLE = "/account/google/login";
+        String GET_ACCOUNT = "/account";
+
+        String GET_CAR = "/car";
 
     }
 }
