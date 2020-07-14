@@ -1,30 +1,30 @@
 package com.example.bpcrsadmin.screen.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.screen.home.HomeActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Arrays;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btLogin;
     private ProgressBar progressBar;
+    private GoogleSignInClient mGoogleSignInClient;
+    private int RC_SIGN_IN = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         init();
         //loadDataFromFirebase();
         btLogin.setOnClickListener(this);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     public void init() {
@@ -40,58 +43,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar = findViewById(R.id.progressBar);
     }
 
-    public void loadDataFromFirebase() {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Location");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //get list database from firebase
-                String mlatiude = dataSnapshot.child("latitude").getValue().toString().substring(1, dataSnapshot.child("latitude").getValue().toString().length() - 1);
-                String mlongitude = dataSnapshot.child("longitude").getValue().toString().substring(1, dataSnapshot.child("longitude").getValue().toString().length() - 1);
-                String mTime = dataSnapshot.child("time").getValue().toString().substring(1, dataSnapshot.child("time").getValue().toString().length() - 1);
-
-                String[] stringLat = mlatiude.split(", ");
-                Arrays.sort(stringLat);
-                //get last
-                String latiude = stringLat[stringLat.length-1].split("=")[1];
-
-                String[] stringLong = mlongitude.split(", ");
-                Arrays.sort(stringLong);
-                String longitude = stringLong[stringLong.length - 1].split("=")[1];
-
-                String[] stringTime = mTime.split(", ");
-                Arrays.sort(stringTime);
-                String time = stringTime[stringTime.length - 1].split("=")[1];
-
-                Log.d("Success firebase", latiude + " " + longitude + " " + time);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("Failure firebase", databaseError.getDetails());
-            }
-        });
-    }
-
     @Override
     public void onClick(View view) {
         btLogin.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        CountDownTimer mCountDownTimer = new CountDownTimer(3000, 1000) {
-            @Override
-            public void onTick(long l) {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
 
-            }
 
-            @Override
-            public void onFinish() {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        };
-        mCountDownTimer.start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+//            updateUI(account);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("LOGIN", "signInResult:failed code=" + e.getStatusCode());
+//            updateUI(null);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
