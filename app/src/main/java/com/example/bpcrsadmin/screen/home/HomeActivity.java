@@ -8,29 +8,33 @@
 
 package com.example.bpcrsadmin.screen.home;
 
-import androidx.annotation.Nullable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.screen.home.car.CarFragment;
 import com.example.bpcrsadmin.screen.home.contract.ContractFragment;
 import com.example.bpcrsadmin.screen.home.track.TractFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class HomeActivity extends AppCompatActivity  {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private BottomAppBar botNav;
     private FloatingActionButton fltTrack;
@@ -44,7 +48,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     private ImageView imgCar;
     private TextView tvCar;
-
+    private Button btSignOut;
     private ImageView imgContract;
     private TextView tvContract;
     private TextView tvTracking;
@@ -71,17 +75,8 @@ public class HomeActivity extends AppCompatActivity  {
                 pressTracking();
             }
         });
-
-        viewCars.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedFragment = CarFragment.newInstance();
-                pressMyCar();
-                unpressedContract();
-                unpressedTracking();
-                changeFragment(selectedFragment);
-            }
-        });
+            viewCars.setOnClickListener(this);
+//            btSignOut.setOnClickListener(this);
 
         viewContracts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +111,7 @@ public class HomeActivity extends AppCompatActivity  {
         imgContract = findViewById(R.id.img_contract);
         tvContract = findViewById(R.id.tv_contract);
         tvTracking = findViewById(R.id.tv_tracking);
+//        btSignOut = findViewById(R.id.button_sign_out);
     }
 
     public void changeFragment(Fragment selectedFragment) {
@@ -177,6 +173,22 @@ public class HomeActivity extends AppCompatActivity  {
 
         return true;
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.view_cars:
+                selectedFragment = CarFragment.newInstance();
+                pressMyCar();
+                unpressedContract();
+                unpressedTracking();
+                changeFragment(selectedFragment);
+                break;
+        }
+    }
+
+
+
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

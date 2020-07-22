@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        //loadDataFromFirebase();
         btLogin.setOnClickListener(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
@@ -49,8 +48,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
-
     }
 
     @Override
@@ -68,7 +65,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            if (account != null) {
+                String personName = account.getDisplayName();
+                String personGivenName = account.getGivenName();
+                String personEmail = account.getEmail();
+                String token = account.getIdToken();
+//                String urlImg = account.getPhotoUrl().toString();
+                Log.d("PERSON INFO", personName +  personEmail + token );
+            }
             // Signed in successfully, show authenticated UI.
 //            updateUI(account);
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
