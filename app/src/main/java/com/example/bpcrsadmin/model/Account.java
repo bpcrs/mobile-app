@@ -7,14 +7,15 @@
  */
 
 package com.example.bpcrsadmin.model;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class Account {
+    private int id;
     private String email;
     private String imageUrl;
     private String fullName;
+    private String role;
 }

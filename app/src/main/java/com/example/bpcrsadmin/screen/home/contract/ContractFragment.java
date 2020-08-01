@@ -104,7 +104,15 @@ public class ContractFragment extends Fragment implements View.OnClickListener {
                 build();
 
         GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(Objects.requireNonNull(getActivity()),gso);
-        googleSignInClient.signOut()
+//        googleSignInClient.signOut()
+//                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//
+//                    }
+//
+//                });
+        googleSignInClient.revokeAccess()
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -112,7 +120,6 @@ public class ContractFragment extends Fragment implements View.OnClickListener {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                     }
-
                 });
     }
 }

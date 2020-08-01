@@ -9,8 +9,10 @@
 package com.example.bpcrsadmin.repository.services;
 
 import com.example.bpcrsadmin.model.Account;
+import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 
 public interface AppRepository {
-    void loginWithGoogle(CallbackData<Account> callbackData);
+    void loginWithGoogle(CallbackData<Account> callbackData, String token);
+    void  getCarById(int carId, CallbackData<Car> callbackData);
 }

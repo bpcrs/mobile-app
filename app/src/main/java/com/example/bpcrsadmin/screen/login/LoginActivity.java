@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,13 +18,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btLogin;
     private ProgressBar progressBar;
-    private GoogleSignInClient mGoogleSignInClient;
+    private Task<GoogleSignInAccount> mGoogleSignInClient;
+    private GoogleSignInClient mClient;
     private int RC_SIGN_IN = 200;
 
     @Override
@@ -32,9 +35,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         init();
         btLogin.setOnClickListener(this);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                .requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
+        mClient = GoogleSignIn.getClient(this, gso);
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+//            .silentSignIn().addOnCompleteListener(
+//                this,
+//                new OnCompleteListener<GoogleSignInAccount>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+//                        handleSignInResult(task);
+//                    }
+//                });;
     }
 
     public void init() {
@@ -46,8 +59,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         btLogin.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Intent signInIntent = mClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        // This task is always completed immediately, there is no need to attach an
+// asynchronous listener.
+
     }
 
     @Override
@@ -62,18 +78,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private void handleSignInResult( Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            if (account != null) {
-                String personName = account.getDisplayName();
-                String personGivenName = account.getGivenName();
-                String personEmail = account.getEmail();
-                String token = account.getIdToken();
-//                String urlImg = account.getPhotoUrl().toString();
-                Log.d("PERSON INFO", personName +  personEmail + token );
-            }
+            String idToken = account.getIdToken();
+            Log.d("TOKEN", "token: " + idToken);
             // Signed in successfully, show authenticated UI.
+
 //            updateUI(account);
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);

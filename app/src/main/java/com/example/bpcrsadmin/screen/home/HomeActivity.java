@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.bpcrsadmin.R;
+import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.screen.home.car.CarFragment;
 import com.example.bpcrsadmin.screen.home.contract.ContractFragment;
 import com.example.bpcrsadmin.screen.home.track.TractFragment;
@@ -34,7 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener, HomeView {
 
     private BottomAppBar botNav;
     private FloatingActionButton fltTrack;
@@ -53,6 +54,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvContract;
     private TextView tvTracking;
 
+    private HomePresenter homePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         initData();
         setSupportActionBar(botNav);
-
+        homePresenter = new HomePresenter(this, this);
+        homePresenter.getCarById(1);
         //init fragment
         changeFragment(CarFragment.newInstance());
         pressMyCar();
@@ -187,7 +191,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onSuccessGetCar(Car car) {
+        if (car != null) {
+            Log.d("CAR", car.getName());
+        }
+    }
 
+    @Override
+    public void onFailGetCar() {
+
+    }
 
 
 //    @Override

@@ -79,4 +79,5 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     //google
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.android.support:support-annotations:28.0.0'
 }
