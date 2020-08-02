@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.example.bpcrsadmin.model.Account;
 import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.model.CarPayload;
 import com.example.bpcrsadmin.repository.api.ApiClient;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 
@@ -29,17 +30,16 @@ public class AppRepositoryImpl implements AppRepository{
     @Override
     public void getCarById(int carId, CallbackData<Car> callbackData) {
         AppService service = ApiClient.getClient().create(AppService.class);
-        Call<Car> call = service.getCarById(carId);
-        call.enqueue(new Callback<Car>() {
+        Call<CarPayload> call = service.getCarById(carId);
+        call.enqueue(new Callback<CarPayload>() {
             @Override
-            public void onResponse(Call<Car> call, Response<Car> response) {
-                Log.d("CAR", response.body().getName());
-                callbackData.onSuccess(response.body());
+            public void onResponse(Call<CarPayload> call, Response<CarPayload> response) {
+                Log.d("RESPONSE", response.body().getData().getName());
             }
 
             @Override
-            public void onFailure(Call<Car> call, Throwable t) {
-                callbackData.onFail(t.getLocalizedMessage());
+            public void onFailure(Call<CarPayload> call, Throwable t) {
+
             }
         });
     }

@@ -11,6 +11,7 @@ package com.example.bpcrsadmin.repository.services;
 
 import com.example.bpcrsadmin.model.Account;
 import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.model.CarPayload;
 import com.example.bpcrsadmin.repository.api.ApiConfig;
 
 import retrofit2.Call;
@@ -24,5 +25,5 @@ public interface AppService {
     Call<Account> loginWithGoogle(Account account);
 
     @GET(ApiConfig.Api.GET_CAR)
-    Call<Car> getCarById(@Path("id") int id);
+    Call<CarPayload> getCarById(@Path("id") int id);
 }
