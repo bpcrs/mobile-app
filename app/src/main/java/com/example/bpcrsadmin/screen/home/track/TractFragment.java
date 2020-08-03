@@ -10,25 +10,31 @@ package com.example.bpcrsadmin.screen.home.track;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.bpcrsadmin.R;
+import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.screen.home.track.adapter.TrackAdapter;
+import com.example.bpcrsadmin.screen.home.track.adapter.TrackItemClickListener;
 import com.example.bpcrsadmin.screen.monitor.MonitorActivity;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TractFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TractFragment extends Fragment {
+public class TractFragment extends Fragment implements TrackItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,6 +43,8 @@ public class TractFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Car> mCarList;
+    private RecyclerView rvTrack;
 
     public TractFragment() {
         // Required empty public constructor
@@ -61,6 +69,18 @@ public class TractFragment extends Fragment {
 //        }
     }
 
+    public void bindCarsToRecyclerView(List<Car> carList) {
+        TrackAdapter trackAdapter = new TrackAdapter(getContext(), carList, this);
+        rvTrack.setAdapter(trackAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rvTrack.setLayoutManager(layoutManager);
+    }
+
+    public void createCarList() {
+        mCarList = new ArrayList<>();
+        mCarList.add(new Car(2, "lambo", 650000, "abcd22r4398"));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,13 +91,22 @@ public class TractFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        CardView cvTrack = Objects.requireNonNull(getActivity()).findViewById(R.id.cv_track);
-        cvTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MonitorActivity.class);
-                startActivity(intent);
-            }
-        });
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvTrack = view.findViewById(R.id.rv_tracks);
+
+        createCarList();
+        bindCarsToRecyclerView(mCarList);
+    }
+
+    @Override
+    public void onTrackTapped(Car car) {
+        Intent intent = new Intent(getActivity(), MonitorActivity.class);
+        startActivity(intent);
+
     }
 }
