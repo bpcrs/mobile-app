@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,8 +51,6 @@
                 android:text="Duration: 1d 2h"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"/>
-
-
 
             <TextView
                 android:fontFamily="@font/nunito_black_italic"
