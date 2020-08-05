@@ -14,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bpcrsadmin.BuildConfig;
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.model.Car;
 
@@ -42,7 +45,10 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TrackViewHolder holder, int position) {
-
+        if (position % 2 == 1) {
+            holder.mLayout.setBackgroundResource(R.drawable.background_silver_radius);
+            holder.mButtonTrack.setBackgroundResource(R.drawable.bg_button_track_silver);
+        }
     }
 
     @Override
@@ -51,10 +57,16 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     }
 
     public class TrackViewHolder extends RecyclerView.ViewHolder {
+        private ConstraintLayout mLayout;
+        private ConstraintLayout mButtonTrack;
 
         public TrackViewHolder(@NonNull View itemView) {
             super(itemView);
+            mLayout = itemView.findViewById(R.id.item_rv_track);
+            mButtonTrack = itemView.findViewById(R.id.button_track);
             itemView.setOnClickListener(v -> trackItemClickListener.onTrackTapped(mCarList.get(getAdapterPosition())));
         }
     }
+
+
 }

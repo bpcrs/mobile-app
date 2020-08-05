@@ -79,6 +79,7 @@ public class TractFragment extends Fragment implements TrackItemClickListener {
     public void createCarList() {
         mCarList = new ArrayList<>();
         mCarList.add(new Car(2, "lambo", 650000, "abcd22r4398"));
+        mCarList.add(new Car(3, "lambo", 650000, "abcd22r4398"));
     }
 
     @Override

@@ -13,7 +13,7 @@
     <!--<padding-->
     <stroke android:color="@color/white" android:width="2dp"/>
 
-    <corners android:bottomRightRadius="20dp"
+    <corners android:bottomRightRadius="40dp"
         android:bottomLeftRadius="0dp"
         android:topLeftRadius="40dp"
         android:topRightRadius="0dp"/>

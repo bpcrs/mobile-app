@@ -7,11 +7,11 @@
   ~  */
   -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colorPrimary"/>
+    <solid android:color="@color/silver"/>
 
 
     <!--<padding-->
-    <stroke android:color="@color/colorPrimary" android:width="2dp"/>
+    <stroke android:color="@color/silver" android:width="2dp"/>
 
     <corners android:bottomRightRadius="0dp"
         android:bottomLeftRadius="40dp"
