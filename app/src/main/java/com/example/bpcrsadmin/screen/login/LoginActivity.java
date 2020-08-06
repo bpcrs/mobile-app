@@ -21,13 +21,14 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
 
     private Button btLogin;
     private ProgressBar progressBar;
     private Task<GoogleSignInAccount> mGoogleSignInClient;
     private GoogleSignInClient mClient;
     private int RC_SIGN_IN = 200;
+    private LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String idToken = account.getIdToken();
             Log.d("TOKEN", "token: " + idToken);
             // Signed in successfully, show authenticated UI.
-
+            loginPresenter = new LoginPresenter(this, this);
+            loginPresenter.loginWithGoogle(idToken);
 //            updateUI(account);
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
@@ -100,6 +102,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onSuccessLogin(String jwt) {
+
+    }
+
+    @Override
+    public void onFailLogin() {
 
     }
 }

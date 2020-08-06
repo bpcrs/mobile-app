@@ -11,6 +11,7 @@ package com.example.bpcrsadmin.helper;
 import android.content.Context;
 
 import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.model.LoginPayload;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 import com.example.bpcrsadmin.repository.services.AppRepository;
 import com.example.bpcrsadmin.repository.services.AppRepositoryImpl;
@@ -26,5 +27,9 @@ public class RepoHelper {
 
     public void getCarById(int id, final CallbackData<Car> callbackData) {
         appRepository.getCarById(id, callbackData);
+    }
+
+    public void loginWithGoogle(String token, final CallbackData<LoginPayload> callbackData) {
+        appRepository.loginWithGoogle(callbackData, token);
     }
 }
