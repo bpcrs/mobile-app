@@ -43,9 +43,9 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CarViewHolder holder, int position) {
-        holder.tvCarName.setText(mCarList.get(position).getModel());
-        String info = mCarList.get(position).getYear() + " - " + mCarList.get(position).getCarNumber();
-        holder.tvCarInfo.setText(info);
+//        holder.tvCarName.setText(mCarList.get(position).getModel());
+//        String info = mCarList.get(position).getYear() + " - " + mCarList.get(position).getCarNumber();
+//        holder.tvCarInfo.setText(info);
     }
 
     @Override

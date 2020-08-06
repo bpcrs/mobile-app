@@ -86,9 +86,9 @@ public class CarFragment extends Fragment implements CarItemClickListener {
 
     public void createCarList() {
         mCarList = new ArrayList<>();
-        mCarList.add(new Car("Lamborghini", "2019", "SS 66 AA 77"));
-        mCarList.add(new Car("Ferrari", "2018", "55 BB AA 11"));
-        mCarList.add(new Car("Tesla", "2019", "RR 44 DD 77"));
+//        mCarList.add(new Car("Lamborghini", "2019", "SS 66 AA 77"));
+//        mCarList.add(new Car("Ferrari", "2018", "55 BB AA 11"));
+//        mCarList.add(new Car("Tesla", "2019", "RR 44 DD 77"));
     }
 
     @Override
@@ -108,14 +108,14 @@ public class CarFragment extends Fragment implements CarItemClickListener {
 
     @Override
     public void onCarTapped(Car car) {
-        Fragment detail = DetailFragment.newInstance(car.getModel(), car.getCarNumber());
-        //add the fragment to activity
-        if (getFragmentManager() != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_container, detail);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.addToBackStack(null);
-            ft.commit();
-        }
+//        Fragment detail = DetailFragment.newInstance(car.getModel(), car.getCarNumber());
+//        //add the fragment to activity
+//        if (getFragmentManager() != null) {
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.replace(R.id.fragment_container, detail);
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//            ft.addToBackStack(null);
+//            ft.commit();
+//        }
     }
 }

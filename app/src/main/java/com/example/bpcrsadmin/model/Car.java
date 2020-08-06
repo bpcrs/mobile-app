@@ -1,42 +1,64 @@
 package com.example.bpcrsadmin.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Car implements Serializable {
-    private String model;
-    private String year;
-    private String carNumber;
 
-    public Car() {
+    @SerializedName("id")
+    @Expose
+    private int id;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("price")
+    @Expose
+    private double price;
+
+    @SerializedName("vin")
+    @Expose
+    private String vin;
+
+    public Car(int id, String name, double price, String vin) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.vin = vin;
     }
 
-    public Car(String model, String year, String carNumber) {
-        this.model = model;
-        this.year = year;
-        this.carNumber = carNumber;
+    public int getId() {
+        return id;
     }
 
-    public String getModel() {
-        return model;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public String getName() {
+        return name;
     }
 
-    public String getYear() {
-        return year;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public double getPrice() {
+        return price;
     }
 
-    public String getCarNumber() {
-        return carNumber;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
     }
 }

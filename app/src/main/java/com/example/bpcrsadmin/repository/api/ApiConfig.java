@@ -10,9 +10,13 @@ package com.example.bpcrsadmin.repository.api;
 
 public class ApiConfig {
 
-    public static final String BASE_URL = "api.bpcrs.network/";
+    public static final String BASE_URL = "https://api.bpcrs.network/";
 
     public interface Api {
+        String LOGIN_BY_GOOGLE = "/account/google/login";
+        String GET_ACCOUNT = "/account";
+
+        String GET_CAR = "/car/{id}";
 
     }
 }

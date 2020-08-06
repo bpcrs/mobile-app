@@ -11,4 +11,11 @@
         android:layout_height="match_parent"
         android:text="Contract" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+
+        android:id="@+id/button_sign_out"/>
+
 </FrameLayout>
