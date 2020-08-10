@@ -29,11 +29,14 @@ import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.screen.home.car.CarFragment;
 import com.example.bpcrsadmin.screen.home.contract.ContractFragment;
 import com.example.bpcrsadmin.screen.home.track.TractFragment;
+import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, HomeView {
 
@@ -53,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView imgContract;
     private TextView tvContract;
     private TextView tvTracking;
+    private int userId;
 
     private HomePresenter homePresenter;
 
@@ -94,14 +98,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         setupToolbar();
-        // OneSignal Initialization
-        /*
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-
-         */
+        userId = SharedPreferenceUtils.retrieveDataInt(this, getString(R.string.id));
+        String jwt = SharedPreferenceUtils.retrieveData(getApplicationContext(), getString(R.string.jwt));
+        homePresenter.getMyCars(userId,jwt);
+        Log.d("INFO USER", userId + " " );
     }
 
     public void initData() {
@@ -196,6 +196,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (car != null) {
             Log.d("CAR", car.getName());
         }
+    }
+
+    @Override
+    public void onSuccessGetCars(List<Car> cars) {
+
     }
 
     @Override

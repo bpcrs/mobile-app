@@ -7,15 +7,30 @@
  */
 
 package com.example.bpcrsadmin.model;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Account {
+public class Account implements Serializable {
+
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("email")
     private String email;
-    private String imageUrl;
+
+    @SerializedName("fullName")
     private String fullName;
+
+    @SerializedName("imageUrl")
+    private String imageUrl;
+
+    @SerializedName("role")
     private String role;
+
 }

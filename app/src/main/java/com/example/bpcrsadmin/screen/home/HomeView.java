@@ -10,7 +10,10 @@ package com.example.bpcrsadmin.screen.home;
 
 import com.example.bpcrsadmin.model.Car;
 
+import java.util.List;
+
 public interface HomeView {
     void onSuccessGetCar(Car car);
+    void  onSuccessGetCars(List<Car> cars);
     void onFailGetCar();
 }

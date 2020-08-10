@@ -9,4 +9,14 @@
     <string name="carImgDesc">Image Description</string>
     <string name="iconDesc">BPCRS logo</string>
     <string name="server_client_id">1043242375296-ck38ibudlls541lp28trhiq4g2pi00af.apps.googleusercontent.com</string>
+
+    <!-- user info login -->
+    <string name="jwt">jwt_token_access</string>
+
+    <string name="id">id</string>
+    <string name="email">email</string>
+    <string name="fullName">fullName</string>
+    <string name="imageUrl">imageUrl</string>
+    <string name="role">role</string>
+
 </resources>

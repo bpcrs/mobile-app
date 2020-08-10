@@ -9,6 +9,7 @@
 package com.example.bpcrsadmin.screen.login;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.bpcrsadmin.helper.RepoHelper;
 import com.example.bpcrsadmin.model.LoginPayload;
@@ -30,12 +31,12 @@ public class LoginPresenter {
 
             @Override
             public void onSuccess(LoginPayload loginPayload) {
-
+                mLoginView.onSuccessLogin(loginPayload.getData());
             }
 
             @Override
             public void onFail(String message) {
-
+                Log.d("login_fail", message);
             }
         });
     }

@@ -13,6 +13,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class CarPayload implements Serializable {
+
     @SerializedName("success")
     private String success;
 
