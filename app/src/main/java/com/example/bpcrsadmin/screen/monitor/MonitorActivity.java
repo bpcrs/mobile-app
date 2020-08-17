@@ -37,6 +37,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bpcrsadmin.R;
+import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.model.Distance;
 import com.example.bpcrsadmin.model.request.DistanceRequest;
 import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
@@ -81,7 +82,9 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
     private TextView tvTimeLocation;
     private TextView tvAddress;
+    private TextView tvCarName;
     private ImageButton tvPhone;
+    private Car car;
 
     private static final String SREF = "OLD_LOCATION";
 
@@ -103,7 +106,9 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
 
-
+        car = (Car) getIntent().getSerializableExtra("car");
+        assert car != null;
+        tvCarName.setText(car.getName());
     }
 
     public void init() {
@@ -112,6 +117,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         tvTimeLocation = findViewById(R.id.tv_distance_location);
         tvAddress = findViewById(R.id.tv_address);
         tvPhone = findViewById(R.id.bt_phone);
+        tvCarName = findViewById(R.id.tv_car);
     }
     public void loadLastLocation() {
         SharedPreferences pref = this.getSharedPreferences(SREF, Context.MODE_PRIVATE);

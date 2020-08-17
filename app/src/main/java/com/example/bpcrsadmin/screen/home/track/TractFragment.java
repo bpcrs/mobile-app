@@ -123,6 +123,7 @@ public class TractFragment extends Fragment implements TrackItemClickListener, H
     @Override
     public void onTrackTapped(Car car) {
         Intent intent = new Intent(getActivity(), MonitorActivity.class);
+        intent.putExtra("car", car);
         startActivity(intent);
 
     }
