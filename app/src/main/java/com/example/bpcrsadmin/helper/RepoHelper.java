@@ -11,9 +11,9 @@ package com.example.bpcrsadmin.helper;
 import android.content.Context;
 
 import com.example.bpcrsadmin.model.Car;
-import com.example.bpcrsadmin.model.CarsPayload;
-import com.example.bpcrsadmin.model.ListCarPayload;
-import com.example.bpcrsadmin.model.LoginPayload;
+import com.example.bpcrsadmin.model.Distance;
+import com.example.bpcrsadmin.model.payload.LoginPayload;
+import com.example.bpcrsadmin.model.request.DistanceRequest;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 import com.example.bpcrsadmin.repository.services.AppRepository;
 import com.example.bpcrsadmin.repository.services.AppRepositoryImpl;
@@ -39,5 +39,9 @@ public class RepoHelper {
 
     public void getMyCars(int id, String jwt, final CallbackData<List<Car>> callbackData) {
         appRepository.getMyCars(id, jwt, callbackData);
+    }
+
+    public void getDistanceBetweenTwoLocation(DistanceRequest request, final CallbackData<Distance> callbackData) {
+        appRepository.getDistance(request, callbackData);
     }
 }

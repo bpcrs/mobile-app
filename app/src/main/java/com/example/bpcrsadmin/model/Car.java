@@ -5,6 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Car implements Serializable {
 
     @SerializedName("id")
@@ -23,42 +32,7 @@ public class Car implements Serializable {
     @Expose
     private String vin;
 
-    public Car(int id, String name, double price, String vin) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.vin = vin;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
+    @SerializedName("location")
+    @Expose
+    private String location;
 }

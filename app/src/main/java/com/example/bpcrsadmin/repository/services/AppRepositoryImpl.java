@@ -10,26 +10,21 @@ package com.example.bpcrsadmin.repository.services;
 
 import android.util.Log;
 
-import com.example.bpcrsadmin.R;
-import com.example.bpcrsadmin.model.Account;
 import com.example.bpcrsadmin.model.Car;
-import com.example.bpcrsadmin.model.CarPayload;
-import com.example.bpcrsadmin.model.CarsPayload;
-import com.example.bpcrsadmin.model.ListCarPayload;
-import com.example.bpcrsadmin.model.LoginPayload;
+import com.example.bpcrsadmin.model.Distance;
+import com.example.bpcrsadmin.model.payload.CarPayload;
+import com.example.bpcrsadmin.model.payload.DistancePayload;
+import com.example.bpcrsadmin.model.payload.ListCarPayload;
+import com.example.bpcrsadmin.model.payload.LoginPayload;
+import com.example.bpcrsadmin.model.request.DistanceRequest;
 import com.example.bpcrsadmin.repository.api.ApiClient;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
-import com.example.bpcrsadmin.utils.Constant;
-import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AppRepositoryImpl implements AppRepository{
-
 
     @Override
     public void loginWithGoogle(CallbackData<LoginPayload> callbackData, String token) {
@@ -57,7 +52,8 @@ public class AppRepositoryImpl implements AppRepository{
             @Override
             public void onResponse(Call<CarPayload> call, Response<CarPayload> response) {
                 Log.d("RESPONSE", response.body().getData().getName() + response.body().getData().getVin() + response.body().getData().getPrice());
-
+                assert response.body() != null;
+                callbackData.onSuccess(response.body().getData());
             }
 
             @Override
@@ -75,7 +71,8 @@ public class AppRepositoryImpl implements AppRepository{
         call.enqueue(new Callback<ListCarPayload>() {
             @Override
             public void onResponse(Call<ListCarPayload> call, Response<ListCarPayload> response) {
-                Log.d("CARS", response.body().getData().getCar().get(0).getName() + "");
+//                Log.d("CARS", response.body().getData().getCar().get(0).getName());
+//                    callbackData.onSuccess();
             }
 
             @Override
@@ -84,6 +81,28 @@ public class AppRepositoryImpl implements AppRepository{
             }
         });
 
+    }
+
+    @Override
+    public void getDistance(DistanceRequest request, CallbackData<Distance> callbackData) {
+        AppService service = ApiClient.getClient().create(AppService.class);
+        Call<DistancePayload> call = service.getDistanceBetweenTwoLocation(request);
+        call.enqueue(new Callback<DistancePayload>() {
+            @Override
+            public void onResponse(Call<DistancePayload> call, Response<DistancePayload> response) {
+                assert response.body() != null;
+
+
+                callbackData.onSuccess(response.body().getData());
+                Log.d("response success", response.body().getData().getDistance());
+
+            }
+
+            @Override
+            public void onFailure(Call<DistancePayload> call, Throwable t) {
+
+            }
+        });
     }
 
 

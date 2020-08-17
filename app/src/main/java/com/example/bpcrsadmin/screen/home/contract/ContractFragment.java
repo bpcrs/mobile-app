@@ -13,6 +13,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,23 +22,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bumptech.glide.Glide;
 import com.example.bpcrsadmin.R;
+import com.example.bpcrsadmin.model.Booking;
+import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.screen.home.contract.adapter.ContractAdapter;
+import com.example.bpcrsadmin.screen.home.contract.adapter.ContractItemClickListener;
 import com.example.bpcrsadmin.screen.login.LoginActivity;
+import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ContractFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContractFragment extends Fragment implements View.OnClickListener {
+public class ContractFragment extends Fragment implements View.OnClickListener, ContractItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,6 +58,9 @@ public class ContractFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private Button btSignOut;
+    private CircleImageView ctvAvatar;
+    private RecyclerView rvContract;
+    private List<Booking> mBookList;
 
     public ContractFragment() {
         // Required empty public constructor
@@ -84,10 +99,19 @@ public class ContractFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contract, container, false);
         btSignOut =  view.findViewById(R.id.button_sign_out);
+        ctvAvatar = view.findViewById(R.id.civ_avatar);
+        rvContract = view.findViewById(R.id.rv_contract);
         btSignOut.setOnClickListener(this);
+        setAvatarUser();
+        createBookList();
+        bindBookingsToRecyclerView(mBookList);
         return view;
     }
 
+    public void setAvatarUser() {
+        String imgUrl = SharedPreferenceUtils.retrieveData(Objects.requireNonNull(getActivity()), getString(R.string.imageUrl));
+        Glide.with(this).load(imgUrl).into(ctvAvatar);
+    }
 
     @Override
     public void onClick(View v) {
@@ -104,14 +128,6 @@ public class ContractFragment extends Fragment implements View.OnClickListener {
                 build();
 
         GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(Objects.requireNonNull(getActivity()),gso);
-//        googleSignInClient.signOut()
-//                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//
-//                    }
-//
-//                });
         googleSignInClient.revokeAccess()
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
@@ -121,5 +137,25 @@ public class ContractFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent);
                     }
                 });
+    }
+
+    public void createBookList() {
+        mBookList = new ArrayList<>();
+        Car car = Car.builder().id(4).name("abc").vin("xyz").price(20000).build();
+        Booking book = Booking.builder().car(car).build();
+        mBookList.add(book);
+        mBookList.add(book);
+    }
+
+    public void bindBookingsToRecyclerView(List<Booking> bookingList) {
+        ContractAdapter contractAdapter = new ContractAdapter(getContext(), bookingList, this);
+        rvContract.setAdapter(contractAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rvContract.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void onBookTapped(Booking booking) {
+
     }
 }

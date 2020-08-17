@@ -12,6 +12,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -45,6 +46,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TrackViewHolder holder, int position) {
+        holder.mTvCarName.setText(mCarList.get(position).getName());
+        holder.mTvInfo.setText(mCarList.get(position).getVin());
         if (position % 2 == 1) {
             holder.mLayout.setBackgroundResource(R.drawable.background_silver_radius);
             holder.mButtonTrack.setBackgroundResource(R.drawable.bg_button_track_silver);
@@ -58,11 +61,15 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     public class TrackViewHolder extends RecyclerView.ViewHolder {
         private ConstraintLayout mLayout;
+        private TextView mTvCarName;
+        private TextView mTvInfo;
         private ConstraintLayout mButtonTrack;
 
         public TrackViewHolder(@NonNull View itemView) {
             super(itemView);
             mLayout = itemView.findViewById(R.id.item_rv_track);
+            mTvCarName = itemView.findViewById(R.id.tv_carName);
+            mTvInfo = itemView.findViewById(R.id.tv_carInfo);
             mButtonTrack = itemView.findViewById(R.id.button_track);
             itemView.setOnClickListener(v -> trackItemClickListener.onTrackTapped(mCarList.get(getAdapterPosition())));
         }

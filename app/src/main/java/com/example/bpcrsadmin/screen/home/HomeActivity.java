@@ -67,8 +67,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         initData();
         setSupportActionBar(botNav);
-        homePresenter = new HomePresenter(this, this);
-        homePresenter.getCarById(1);
+//        homePresenter = new HomePresenter(this, this);
+//        homePresenter.getCarById(1);
         //init fragment
         changeFragment(CarFragment.newInstance());
         pressMyCar();
@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setupToolbar();
         userId = SharedPreferenceUtils.retrieveDataInt(this, getString(R.string.id));
         String jwt = SharedPreferenceUtils.retrieveData(getApplicationContext(), getString(R.string.jwt));
-        homePresenter.getMyCars(userId,jwt);
+//        homePresenter.getMyCars(userId,jwt);
         Log.d("INFO USER", userId + " " );
     }
 
@@ -208,9 +208,4 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 }

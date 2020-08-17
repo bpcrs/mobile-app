@@ -12,8 +12,6 @@ import android.content.Context;
 
 import com.example.bpcrsadmin.helper.RepoHelper;
 import com.example.bpcrsadmin.model.Car;
-import com.example.bpcrsadmin.model.CarsPayload;
-import com.example.bpcrsadmin.model.ListCarPayload;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 
 import java.util.List;

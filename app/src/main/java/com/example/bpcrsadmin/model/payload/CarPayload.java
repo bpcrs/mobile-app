@@ -1,13 +1,14 @@
 /*
  * *
- *  * Created by TienND on 8/2/20 10:57 PM
+ *  * Created by TienND on 8/13/20 3:34 PM
  *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 8/2/20 10:57 PM
+ *  * Last modified 8/10/20 11:57 PM
  *
  */
 
-package com.example.bpcrsadmin.model;
+package com.example.bpcrsadmin.model.payload;
 
+import com.example.bpcrsadmin.model.Car;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;

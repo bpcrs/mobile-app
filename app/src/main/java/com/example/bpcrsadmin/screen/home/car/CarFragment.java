@@ -9,6 +9,9 @@
 package com.example.bpcrsadmin.screen.home.car;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,25 +20,28 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.bumptech.glide.Glide;
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.screen.detail.DetailFragment;
+import com.example.bpcrsadmin.screen.home.HomePresenter;
+import com.example.bpcrsadmin.screen.home.HomeView;
 import com.example.bpcrsadmin.screen.home.car.adapter.CarAdapter;
 import com.example.bpcrsadmin.screen.home.car.adapter.CarItemClickListener;
+import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CarFragment extends Fragment implements CarItemClickListener {
+public class CarFragment extends Fragment implements CarItemClickListener, HomeView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,6 +52,9 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     private String mParam2;
     private List<Car> mCarList;
     private RecyclerView rvCar;
+    private CircleImageView avatar;
+    private HomePresenter homePresenter;
+
 
     public CarFragment() {
         // Required empty public constructor
@@ -54,7 +63,6 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
      *
      * @return A new instance of fragment CarFragment.
      */
@@ -84,12 +92,6 @@ public class CarFragment extends Fragment implements CarItemClickListener {
         rvCar.setLayoutManager(layoutManager);
     }
 
-    public void createCarList() {
-        mCarList = new ArrayList<>();
-//        mCarList.add(new Car("Lamborghini", "2019", "SS 66 AA 77"));
-//        mCarList.add(new Car("Ferrari", "2018", "55 BB AA 11"));
-//        mCarList.add(new Car("Tesla", "2019", "RR 44 DD 77"));
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,21 +103,46 @@ public class CarFragment extends Fragment implements CarItemClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvCar = view.findViewById(R.id.rv_cars);
+        avatar = view.findViewById(R.id.avatar);
+        homePresenter = new HomePresenter(this, getActivity());
+        homePresenter.getCarById(1);
+        setAvatarUser();
+//        createCarList();
 
-        createCarList();
-        bindCarsToRecyclerView(mCarList);
+    }
+
+    public void setAvatarUser() {
+        String imgUrl = SharedPreferenceUtils.retrieveData(Objects.requireNonNull(getActivity()), getString(R.string.imageUrl));
+        Glide.with(this).load(imgUrl).into(avatar);
     }
 
     @Override
     public void onCarTapped(Car car) {
-//        Fragment detail = DetailFragment.newInstance(car.getModel(), car.getCarNumber());
-//        //add the fragment to activity
-//        if (getFragmentManager() != null) {
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            ft.replace(R.id.fragment_container, detail);
-//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//            ft.addToBackStack(null);
-//            ft.commit();
-//        }
+        Fragment detail = DetailFragment.newInstance(car.getName(), car.getVin());
+        //add the fragment to activity
+        if (getFragmentManager() != null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_container, detail);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+    }
+
+    @Override
+    public void onSuccessGetCar(Car car) {
+        mCarList = new ArrayList<>();
+        mCarList.add(car);
+        bindCarsToRecyclerView(mCarList);
+    }
+
+    @Override
+    public void onSuccessGetCars(List<Car> cars) {
+
+    }
+
+    @Override
+    public void onFailGetCar() {
+
     }
 }

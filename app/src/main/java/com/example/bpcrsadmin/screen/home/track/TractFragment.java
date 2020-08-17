@@ -8,33 +8,52 @@
 
 package com.example.bpcrsadmin.screen.home.track;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.model.Car;
+import com.example.bpcrsadmin.screen.home.HomeActivity;
+import com.example.bpcrsadmin.screen.home.HomePresenter;
+import com.example.bpcrsadmin.screen.home.HomeView;
 import com.example.bpcrsadmin.screen.home.track.adapter.TrackAdapter;
 import com.example.bpcrsadmin.screen.home.track.adapter.TrackItemClickListener;
 import com.example.bpcrsadmin.screen.monitor.MonitorActivity;
+import com.example.bpcrsadmin.screen.monitor.MonitorView;
+import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.Executor;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TractFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TractFragment extends Fragment implements TrackItemClickListener {
+public class TractFragment extends Fragment implements TrackItemClickListener, HomeView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,6 +64,8 @@ public class TractFragment extends Fragment implements TrackItemClickListener {
     private String mParam2;
     private List<Car> mCarList;
     private RecyclerView rvTrack;
+    private HomePresenter homePresenter;
+    private FusedLocationProviderClient fusedLocationClient;
 
     public TractFragment() {
         // Required empty public constructor
@@ -76,12 +97,6 @@ public class TractFragment extends Fragment implements TrackItemClickListener {
         rvTrack.setLayoutManager(layoutManager);
     }
 
-    public void createCarList() {
-        mCarList = new ArrayList<>();
-        mCarList.add(new Car(2, "lambo", 650000, "abcd22r4398"));
-        mCarList.add(new Car(3, "lambo", 650000, "abcd22r4398"));
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,9 +114,10 @@ public class TractFragment extends Fragment implements TrackItemClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvTrack = view.findViewById(R.id.rv_tracks);
-
-        createCarList();
-        bindCarsToRecyclerView(mCarList);
+        homePresenter = new HomePresenter(this, getActivity());
+        homePresenter.getCarById(1);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        getCurrentLocation();
     }
 
     @Override
@@ -109,5 +125,54 @@ public class TractFragment extends Fragment implements TrackItemClickListener {
         Intent intent = new Intent(getActivity(), MonitorActivity.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onSuccessGetCar(Car car) {
+        mCarList = new ArrayList<>();
+        mCarList.add(car);
+        bindCarsToRecyclerView(mCarList);
+    }
+
+    @Override
+    public void onSuccessGetCars(List<Car> cars) {
+
+    }
+
+    @Override
+    public void onFailGetCar() {
+
+    }
+
+    public void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            try {
+                                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                String yourAddress = addresses.get(0).getAddressLine(0);
+                                Log.d("YOUR LOCATION", yourAddress);
+                                SharedPreferenceUtils.saveYourLocation(Objects.requireNonNull(getActivity()), yourAddress);
+                            } catch (IOException ex) {
+                                ex.getMessage();
+                            }
+                        }
+                    }
+                });
     }
 }

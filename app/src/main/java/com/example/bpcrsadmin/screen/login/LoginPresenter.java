@@ -12,7 +12,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.bpcrsadmin.helper.RepoHelper;
-import com.example.bpcrsadmin.model.LoginPayload;
+import com.example.bpcrsadmin.model.payload.LoginPayload;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 
 public class LoginPresenter {

@@ -17,5 +17,6 @@ public class ApiConfig {
         String GET_ACCOUNT = "/account";
         String GET_CAR = "/car/{id}";
         String GET_MY_CAR = "/car/owner/{id}";
+        String GET_DISTANCE = "/maps";
     }
 }

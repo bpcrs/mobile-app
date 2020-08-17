@@ -13,7 +13,10 @@ import android.content.SharedPreferences;
 
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.model.Account;
+import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.model.Location;
+
+import java.util.List;
 
 public class SharedPreferenceUtils {
 
@@ -38,21 +41,20 @@ public class SharedPreferenceUtils {
         editor.apply();
     }
 
-    public static void saveCurrentLocation(Context context, Location location) {
-        //shared
-        SharedPreferences prefs = context.getSharedPreferences(Constant.BPCRS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+    public static void saveCars(Context context, List<Car> cars) {
 
-        if (null != location) {
-            editor.putInt("car_id", location.getCarId());
-            editor.putString("latitude", location.getLatitude());
-            editor.putString("longitude", location.getLongitude());
-            editor.putString("time", location.getTime());
-        }
-
-        editor.apply();
-        editor.commit();
     }
+
+    public static void saveYourLocation(Context context, String location) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.BPCRS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        if (location != null) {
+            editor.putString(context.getString(R.string.location), location);
+        }
+        editor.apply();
+    }
+
+
 
     public static String retrieveData(Context context, String key) {
         SharedPreferences preferences = context.getSharedPreferences(Constant.BPCRS, Context.MODE_PRIVATE);
