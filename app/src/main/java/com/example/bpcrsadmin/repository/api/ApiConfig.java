@@ -15,8 +15,8 @@ public class ApiConfig {
     public interface Api {
         String LOGIN_BY_GOOGLE = "/account/google/login";
         String GET_ACCOUNT = "/account";
-
         String GET_CAR = "/car/{id}";
-
+        String GET_MY_CAR = "/car/owner/{id}";
+        String GET_DISTANCE = "/maps";
     }
 }

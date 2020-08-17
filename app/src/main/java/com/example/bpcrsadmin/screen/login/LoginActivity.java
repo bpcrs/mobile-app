@@ -7,19 +7,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.auth0.android.jwt.JWT;
 import com.example.bpcrsadmin.R;
+import com.example.bpcrsadmin.model.Account;
 import com.example.bpcrsadmin.screen.home.HomeActivity;
+import com.example.bpcrsadmin.utils.SharedPreferenceUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
 
@@ -107,11 +110,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onSuccessLogin(String jwt) {
-
+        if (jwt != null) {
+            decodeJWT(jwt);
+            SharedPreferenceUtils.saveJwtToken(this, jwt);
+        }
     }
 
     @Override
     public void onFailLogin() {
 
     }
+
+    public void decodeJWT(String token) {
+        JWT jwt = new JWT(token);
+        String subject=  jwt.getSubject();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        Account user = gson.fromJson(subject, Account.class);
+        SharedPreferenceUtils.saveInfoUser(this, user);
+    }
+
 }

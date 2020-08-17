@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by TienND on 8/7/20 1:18 AM
+ *  * Created by TienND on 8/13/20 3:34 PM
  *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 8/7/20 1:18 AM
+ *  * Last modified 8/7/20 1:20 AM
  *
  */
 
-package com.example.bpcrsadmin.model;
+package com.example.bpcrsadmin.model.payload;
 
 import com.google.gson.annotations.SerializedName;
 

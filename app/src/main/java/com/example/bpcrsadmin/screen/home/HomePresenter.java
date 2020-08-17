@@ -14,6 +14,8 @@ import com.example.bpcrsadmin.helper.RepoHelper;
 import com.example.bpcrsadmin.model.Car;
 import com.example.bpcrsadmin.repository.callback.CallbackData;
 
+import java.util.List;
+
 public class HomePresenter {
     private HomeView mHomeView;
     private Context mContext;
@@ -35,6 +37,20 @@ public class HomePresenter {
             @Override
             public void onFail(String message) {
                 mHomeView.onFailGetCar();
+            }
+        });
+    }
+
+    public void getMyCars(int id, String jwt) {
+        mReoHelper.getMyCars(id, jwt, new CallbackData<List<Car>>() {
+            @Override
+            public void onSuccess(List<Car> cars) {
+//                mHomeView.onSuccessGetCars(cars);
+            }
+
+            @Override
+            public void onFail(String message) {
+
             }
         });
     }
