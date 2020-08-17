@@ -167,8 +167,8 @@ public class TractFragment extends Fragment implements TrackItemClickListener, H
                                 Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
                                 List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                 String yourAddress = addresses.get(0).getAddressLine(0);
-                                Log.d("YOUR LOCATION", yourAddress);
                                 SharedPreferenceUtils.saveYourLocation(Objects.requireNonNull(getActivity()), yourAddress);
+                                SharedPreferenceUtils.saveCurrentLocation(Objects.requireNonNull(getActivity()), location.getLatitude(), location.getLongitude());
                             } catch (IOException ex) {
                                 ex.getMessage();
                             }

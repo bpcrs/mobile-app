@@ -19,4 +19,7 @@
     <string name="imageUrl">imageUrl</string>
     <string name="role">role</string>
     <string name="location">location</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+
 </resources>

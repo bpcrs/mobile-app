@@ -171,17 +171,18 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                 time = stringTime[stringTime.length - 1].split("=")[1];
 
                 LatLng newLocation = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-                //Log.d("new location", latitude + " " + longitude);
+                LatLng yourLocation = new LatLng(SharedPreferenceUtils.retrieveDataFloat( getApplicationContext(), getString(R.string.latitude)), SharedPreferenceUtils.retrieveDataFloat(getApplicationContext(), getString(R.string.longitude)));
                 getAddressOfCarLocation();
 
                 mMap.clear();
                 MarkerOptions options = new MarkerOptions().position(newLocation).title("New location")
                         .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MonitorActivity.this, R.drawable.ic_car)));
+
+                MarkerOptions your_location = new MarkerOptions().position(yourLocation).title("Your location")
+                        .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MonitorActivity.this, R.drawable.ic_baseline_location_on_24)));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 15));
                 mMap.addMarker(options);
-
-//                String formatTime = splitTime(time);
-
+                mMap.addMarker(your_location);
                 saveLocation();
             }
 

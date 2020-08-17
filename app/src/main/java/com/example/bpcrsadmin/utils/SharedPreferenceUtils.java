@@ -54,6 +54,15 @@ public class SharedPreferenceUtils {
         editor.apply();
     }
 
+    public static void saveCurrentLocation(Context context, double latitude, double longitude) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.BPCRS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putFloat(context.getString(R.string.latitude), (float) latitude);
+        editor.putFloat(context.getString(R.string.longitude) , (float) longitude);
+        editor.apply();
+
+    }
+
 
 
     public static String retrieveData(Context context, String key) {
@@ -64,6 +73,11 @@ public class SharedPreferenceUtils {
     public static int retrieveDataInt(Context context, String key) {
         SharedPreferences preferences = context.getSharedPreferences(Constant.BPCRS, Context.MODE_PRIVATE);
         return preferences.getInt(key, 0);
+    }
+
+    public static float retrieveDataFloat(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.BPCRS, Context.MODE_PRIVATE);
+        return preferences.getFloat(key, 0);
     }
 
 }
