@@ -45,7 +45,7 @@ public class HomePresenter {
         mReoHelper.getMyCars(id, jwt, new CallbackData<List<Car>>() {
             @Override
             public void onSuccess(List<Car> cars) {
-//                mHomeView.onSuccessGetCars(cars);
+                mHomeView.onSuccessGetCars(cars);
             }
 
             @Override

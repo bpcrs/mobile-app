@@ -105,10 +105,11 @@ public class CarFragment extends Fragment implements CarItemClickListener, HomeV
         rvCar = view.findViewById(R.id.rv_cars);
         avatar = view.findViewById(R.id.avatar);
         homePresenter = new HomePresenter(this, getActivity());
-        homePresenter.getCarById(1);
+//        homePresenter.getCarById(1);
+        String jwt = SharedPreferenceUtils.retrieveData(Objects.requireNonNull(getActivity()), getString(R.string.jwt));
+        int id =  SharedPreferenceUtils.retrieveDataInt(Objects.requireNonNull(getActivity()), getString(R.string.id));
+        homePresenter.getMyCars(id, jwt);
         setAvatarUser();
-//        createCarList();
-
     }
 
     public void setAvatarUser() {
@@ -131,14 +132,16 @@ public class CarFragment extends Fragment implements CarItemClickListener, HomeV
 
     @Override
     public void onSuccessGetCar(Car car) {
-        mCarList = new ArrayList<>();
-        mCarList.add(car);
-        bindCarsToRecyclerView(mCarList);
+//        mCarList = new ArrayList<>();
+//        mCarList.add(car);
+//        bindCarsToRecyclerView(mCarList);
     }
 
     @Override
     public void onSuccessGetCars(List<Car> cars) {
-
+        mCarList = new ArrayList<>();
+        mCarList.addAll(cars);
+        bindCarsToRecyclerView(mCarList);
     }
 
     @Override

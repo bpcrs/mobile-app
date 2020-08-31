@@ -48,7 +48,7 @@
         android:id="@+id/tv_carInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="132dp"
         android:fontFamily="@font/nunito_regular"
         android:text="2019 - LA 00 BR 99"
@@ -86,6 +86,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_detail"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

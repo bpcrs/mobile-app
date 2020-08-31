@@ -115,7 +115,9 @@ public class TractFragment extends Fragment implements TrackItemClickListener, H
         super.onViewCreated(view, savedInstanceState);
         rvTrack = view.findViewById(R.id.rv_tracks);
         homePresenter = new HomePresenter(this, getActivity());
-        homePresenter.getCarById(1);
+        String jwt = SharedPreferenceUtils.retrieveData(Objects.requireNonNull(getActivity()), getString(R.string.jwt));
+        int id =  SharedPreferenceUtils.retrieveDataInt(Objects.requireNonNull(getActivity()), getString(R.string.id));
+        homePresenter.getMyCars(id, jwt);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
         getCurrentLocation();
     }
@@ -125,19 +127,20 @@ public class TractFragment extends Fragment implements TrackItemClickListener, H
         Intent intent = new Intent(getActivity(), MonitorActivity.class);
         intent.putExtra("car", car);
         startActivity(intent);
-
     }
 
     @Override
     public void onSuccessGetCar(Car car) {
-        mCarList = new ArrayList<>();
-        mCarList.add(car);
-        bindCarsToRecyclerView(mCarList);
+//        mCarList = new ArrayList<>();
+//        mCarList.add(car);
+//        bindCarsToRecyclerView(mCarList);
     }
 
     @Override
     public void onSuccessGetCars(List<Car> cars) {
-
+        mCarList = new ArrayList<>();
+        mCarList.addAll(cars);
+        bindCarsToRecyclerView(mCarList);
     }
 
     @Override

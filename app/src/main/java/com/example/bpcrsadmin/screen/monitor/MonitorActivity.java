@@ -199,9 +199,9 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         getNewLocationFromFirebase();
         mMap = googleMap;
 
-        String formatTime = splitTime(time);
+//        String formatTime = splitTime(time);
         Log.d("TIME", time);
-        tvTimeLocation.setText(formatTime);
+//        tvTimeLocation.setText(formatTime);
 
         LatLng lastLocation = new LatLng(la, lo);
         //create market options

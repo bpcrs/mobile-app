@@ -71,8 +71,8 @@ public class AppRepositoryImpl implements AppRepository{
         call.enqueue(new Callback<ListCarPayload>() {
             @Override
             public void onResponse(Call<ListCarPayload> call, Response<ListCarPayload> response) {
-//                Log.d("CARS", response.body().getData().getCar().get(0).getName());
-//                    callbackData.onSuccess();
+                assert response.body() != null;
+                callbackData.onSuccess(response.body().getData().getCar());
             }
 
             @Override

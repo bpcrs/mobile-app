@@ -8,6 +8,7 @@
 
 package com.example.bpcrsadmin.screen.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.bpcrsadmin.R;
 import com.example.bpcrsadmin.screen.home.HomeActivity;
+import com.example.bpcrsadmin.screen.map.MapActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,9 +84,17 @@ public class DetailFragment extends Fragment {
 
         TextView tvCarModel = view.findViewById(R.id.tv_carModel);
         TextView tvCarNumberPlate = view.findViewById(R.id.tv_number_plate);
+        TextView btLocation = view.findViewById(R.id.bt_location);
 
         tvCarModel.setText(mCarModel);
         tvCarNumberPlate.setText(mCarNumberPlate);
+        btLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
 
             if (null != ((HomeActivity) getActivity()).getSupportActionBar()) {
                 ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -64,6 +64,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         private TextView mTvCarName;
         private TextView mTvInfo;
         private ConstraintLayout mButtonTrack;
+        private ConstraintLayout mButtonDetail;
+
 
         public TrackViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +73,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             mTvCarName = itemView.findViewById(R.id.tv_carName);
             mTvInfo = itemView.findViewById(R.id.tv_carInfo);
             mButtonTrack = itemView.findViewById(R.id.button_track);
+            mButtonDetail = itemView.findViewById(R.id.button_detail);
             itemView.setOnClickListener(v -> trackItemClickListener.onTrackTapped(mCarList.get(getAdapterPosition())));
         }
     }

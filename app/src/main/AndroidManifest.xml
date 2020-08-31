@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bpcrsadmin">
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,12 +14,13 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".screen.map.MapActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBa2U_NDgpb5rjf3J6vADDrRpcK3N1K8MY"/>
+            android:value="AIzaSyBa2U_NDgpb5rjf3J6vADDrRpcK3N1K8MY" />
 
-        <activity android:name=".screen.monitor.MonitorActivity"></activity>
+        <activity android:name=".screen.monitor.MonitorActivity" />
         <activity android:name=".screen.home.HomeActivity" />
         <activity android:name=".screen.login.LoginActivity">
             <intent-filter>
